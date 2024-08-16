@@ -41,7 +41,7 @@ type equip struct {
 
 func main() {
 	// Create an instance of the reader by opening a target file
-	xl, _ := xlsxreader.OpenFile("./ggg.xlsx")
+	xl, _ := xlsxreader.OpenFile("./input.xlsx")
 
 	// Ensure the file reader is closed once utilised
 	defer xl.Close()
@@ -160,13 +160,10 @@ func main() {
 
 %s
 
-%s
-
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DELETE FROM equipments;
 DELETE FROM models;
 DELETE FROM ports;
 DELETE FROM brands;
@@ -178,9 +175,8 @@ DELETE FROM protocols;
 	insertProtocols := buildProtocolsQuery(protocols)
 	insertModels := buildModelsQuery(models)
 	insertPorts := buildPortsQuery(ports)
-	insertEquips := buildEquipsQuery(equips)
 
-	query := fmt.Sprintf(queryTpl, insertBrands, insertProtocols, insertModels, insertPorts, insertEquips)
+	query := fmt.Sprintf(queryTpl, insertBrands, insertProtocols, insertModels, insertPorts)
 
 	fi, err := os.Create("migration.sql")
 	if err != nil {

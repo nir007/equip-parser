@@ -1,4 +1,4 @@
-Put xlsx file in project root path
+Put xlsx file (input.xlsx) in project root path
 
 ```
 go run main.go 
